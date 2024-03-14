@@ -39,7 +39,6 @@ public class listening implements Runnable{
             while(main.isConnected() | (read = in.read()) >= 0){
                 byte[] message = encdec.decodeNextByte((byte) read);
                 if ( message != null){
-                    System.out.println("recieved " + Arrays.toString(message));
                     short opcode = ( short ) ((( short ) message [0]) << 8 | ( short ) ( message[1] & 0xff) );
                     router(message, opcode);
                 }
@@ -241,8 +240,6 @@ public class listening implements Runnable{
         msg +=  (short ) ((( short ) message [2]) << 8 | ( short ) ( message[3] & 0xff) ) + " ";//error type
         msg += new String(Arrays.copyOfRange(message, 4, message.length));
         System.out.println(msg);
-        if (!main.isConnected())
-            main.setConnectionStatus(true);
         main.setDownloadStatus(false);
         main.setUploadStatus(false);
         first = true;

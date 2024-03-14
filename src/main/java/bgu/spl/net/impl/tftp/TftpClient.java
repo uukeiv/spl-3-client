@@ -218,7 +218,6 @@ public class TftpClient {
 
     private void getNames(){
         byte[] pack = shortToArr(comToOp.get("DIRQ"));
-        System.out.println(Arrays.toString(pack));
         synchronized(this){
             try {
                 out.write(encdec.encode(pack));
@@ -240,11 +239,9 @@ public class TftpClient {
                 out.write(encdec.encode(pack));
                 out.flush();
             } catch (IOException e) {}
-            if (loggedIn){
-                try {
-                    wait();
-                } catch (InterruptedException e) {}
-            }
+            try {
+                wait();
+            } catch (InterruptedException e) {}
         }
     }
     
